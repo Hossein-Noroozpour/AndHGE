@@ -1,0 +1,25 @@
+apply plugin: 'com.android.application'
+android
+{
+    compileSdkVersion 21
+    buildToolsVersion "21.1.2"
+    defaultConfig
+    {
+        applicationId "com.hulixerian.andhge"
+        minSdkVersion 8
+        targetSdkVersion 21
+        versionCode 1
+        versionName "0.1"
+    }
+    sourceSets.main.jni.srcDirs = []
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+        }
+    }
+}
+dependencies
+{
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+}
