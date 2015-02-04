@@ -16,6 +16,8 @@ void hge::ui::MainWindow::onErrorEvent(int errorNumber, const char* errorDescrip
 }
 void hge::ui::MainWindow::onKeyEvent(GLFWwindow* window, int key, int scanCode, int action, int mods)
 {
+	(void ) scanCode;
+	(void) mods;
 	switch(action)
 	{
 		case(GLFW_PRESS):
@@ -102,6 +104,8 @@ void hge::ui::MainWindow::onKeyEvent(GLFWwindow* window, int key, int scanCode, 
 }
 void hge::ui::MainWindow::onMouseKeyEvent(GLFWwindow* window, int button, int action, int mods)
 {
+	(void) window;
+	(void) mods;
 	switch(action)
 	{
 		case GLFW_PRESS:
@@ -142,12 +146,14 @@ void hge::ui::MainWindow::onMouseKeyEvent(GLFWwindow* window, int button, int ac
 }
 void hge::ui::MainWindow::onCursorMoveEvent(GLFWwindow* window, double x, double y)
 {
+	(void) window;
 	application->mouseMoved((float)(x - lastCursorXposition),(float)(y - lastCursorYposition));
 	lastCursorXposition = x;
 	lastCursorYposition = y;
 }
 void hge::ui::MainWindow::onChangeSizeEvent(GLFWwindow* window, int width, int height)
 {
+	(void) window;
 	glViewport(0, 0, width, height);
 	glScissor(0, 0, width, height);
 }
@@ -164,11 +170,11 @@ void hge::ui::MainWindow::start(const std::shared_ptr<hge::core::ApplicationUnit
 	{
 		HGE_TERMINATE
 	}
-	auto priMon = glfwGetPrimaryMonitor();
-	auto vidMod = glfwGetVideoMode(priMon);
 #ifdef HGE_TEST_MODE
 	window = glfwCreateWindow(750, 500, "Hulixerian Game Engine", 0, NULL);
 #else
+	auto priMon = glfwGetPrimaryMonitor();
+	auto vidMod = glfwGetVideoMode(priMon);
 	window = glfwCreateWindow(vidMod->width, vidMod->height, "Hulixerian Game Engine", priMon, NULL);
 #endif
 	if (!window)
@@ -194,11 +200,9 @@ void hge::ui::MainWindow::start(const std::shared_ptr<hge::core::ApplicationUnit
 	glfwSetKeyCallback(window, onKeyEvent);
 	glfwSetMouseButtonCallback(window, onMouseKeyEvent);
 	glfwSetCursorPosCallback(window, onCursorMoveEvent);
-#endif
-#ifndef ANDROID
 #ifdef HGE_TEST_MODE
-	glViewport(0, 0, 740, 490);
-	glScissor(0, 0, 740, 490);
+	glViewport(0, 0, 750, 500);
+	glScissor(0, 0, 750, 500);
 #else // not HGE_TEST_MODE
 	glViewport(0, 0, vidMod->width, vidMod->height);
 #endif // end of if HGE_TEST_MODE
@@ -246,11 +250,6 @@ void hge::ui::MainWindow::start(const std::shared_ptr<hge::core::ApplicationUnit
 	{
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 		application->update();
-//		glBegin(GL_TRIANGLES);
-//		glVertex3f(0.f, 0.f, 0.f);
-//		glVertex3f(10.f, 0.f, 0.f);
-//		glVertex3f(10.f, 10.f, 0.f);
-//		glEnd();
 		glFinish();
 		glfwSwapBuffers(window);
 		glfwPollEvents();

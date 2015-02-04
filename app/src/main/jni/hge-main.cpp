@@ -6,6 +6,7 @@
 #include "hge-director.hpp"
 #include "hge-system-access.hpp"
 #include "hge-main-window.hpp"
+#include "hge-test-scenarios.hpp"
 #include <memory>
 #include <fstream>
 #include <iostream>
@@ -59,8 +60,14 @@ int main(int argc, char *argv[])
 {
 	(void)argc;
 	(void)argv;
+#ifdef HGE_TEST_SCENARIO_MATH
+
+
+
+#else
 	std::shared_ptr<hge::core::ApplicationUnit> app(new hge::core::Director());
 	hge::ui::MainWindow::start(app);
+#endif
 	return 0;
 }
 #endif

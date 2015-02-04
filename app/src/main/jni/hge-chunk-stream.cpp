@@ -1,8 +1,8 @@
 #include "hge-chunk-stream.hpp"
 hge::utility::ChunkStream::ChunkStream(char * const &chunk, const int &size):
 	chunk(chunk),
-	size(size),
-	offset(0)
+	offset(0),
+	size(size)
 {
 
 }

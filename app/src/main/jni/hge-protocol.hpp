@@ -30,7 +30,7 @@ namespace hge
 				const static Types::ObjectTypeIdType Terrain = 0;
 				const static Types::ObjectTypeIdType Geometry = 1;
 				const static Types::ObjectTypeIdType SkyBox = 2;
-				const static Types::ObjectTypeIdType Mesh = 3;
+				const static Types::ObjectTypeIdType Armature = 3;
 			};
 			class Values
 			{

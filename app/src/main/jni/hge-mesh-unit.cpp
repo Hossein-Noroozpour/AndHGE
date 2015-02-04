@@ -152,12 +152,14 @@ void hge::render::MeshUnit::setData(std::shared_ptr<utility::Stream> &stream, co
 		}
 	}
 #ifdef HGE_VERBOSE_TEST_MODE
-	std::string str = "Vertices: ";
-	for (core::Protocol::Types::VerticesElementsCountType i = 0; i < verticesCount; i++)
 	{
-		str += "v[" + std::to_string(i) + "]:" + std::to_string(vertices[i]) + "  ";
+		std::string str = "Vertices: ";
+		for (core::Protocol::Types::VerticesElementsCountType i = 0; i < verticesCount; i++)
+		{
+			str += "v[" + std::to_string(i) + "]:" + std::to_string(vertices[i]) + "  ";
+		}
+		HGE_LOG_PRINT("%s", str.c_str());
 	}
-	HGE_LOG_PRINT("%s", str.c_str());
 #endif
 	core::Protocol::Types::IndicesCountType indicesCount;
 	stream->read((char *)(&indicesCount), sizeof indicesCount);
@@ -174,6 +176,16 @@ void hge::render::MeshUnit::setData(std::shared_ptr<utility::Stream> &stream, co
 			swapObject((char *)(&indices[i]), sizeof(GLuint));
 		}
 	}
+#ifdef HGE_VERBOSE_TEST_MODE
+	{
+		std::string str = "Indices: ";
+		for (core::Protocol::Types::IndicesCountType i = 0; i < indicesCount; i++)
+		{
+			str += "i[" + std::to_string(i) + "]:" + std::to_string(indices[i]) + "  ";
+		}
+		HGE_LOG_PRINT("%s", str.c_str());
+	}
+#endif
 	if (vbo != 0)
 	{
 		glBindBuffer(GL_ARRAY_BUFFER, 0);

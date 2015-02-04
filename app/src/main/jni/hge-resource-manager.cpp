@@ -45,6 +45,7 @@
 #include "hge-system-access.hpp"
 #include "hge-configure.hpp"
 #include "hge-main-window.hpp"
+#include "hge-armature-unit.hpp"
 #include <fstream>
 #ifdef ANDROID
 #include <android/log.h>
@@ -107,8 +108,12 @@ std::shared_ptr<hge::render::SceneUnit> hge::core::ResourceManager::importScene(
 			result->setTerrain(terrain);
 			break;
 		}
-		case Protocol::ObjectTypes::Mesh:
+		case Protocol::ObjectTypes::Armature:
+		{
+			animation::ArmatureUnit arm;
+			arm.setData(stream, endianCompatible);
 			break;
+		}
 		case Protocol::ObjectTypes::SkyBox:
 			break;
 		default:

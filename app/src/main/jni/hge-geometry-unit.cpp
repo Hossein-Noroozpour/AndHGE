@@ -35,7 +35,7 @@ void hge::render::GeometryUnit::draw(const math::Matrix4D<> &vp)
 #endif
 #ifdef HGE_BASIC_QUERY_SUPPORT
 #ifdef HGE_CONDITIONAL_RENDERING_SUPPORT
-	glBeginConditionalRender(queries[HGEGEOMETRYOCCLUSIONQUERYINDEX], GL_QUERY_WAIT);
+	//glBeginConditionalRender(queries[HGEGEOMETRYOCCLUSIONQUERYINDEX], GL_QUERY_WAIT);
 #else
 	GLuint query_result = 0;
 	glGetQueryObjectuiv(queries[HGEGEOMETRYOCCLUSIONQUERYINDEX], GL_QUERY_RESULT, &query_result);
@@ -57,7 +57,7 @@ void hge::render::GeometryUnit::draw(const math::Matrix4D<> &vp)
 	mesh->draw();
 #ifdef HGE_BASIC_QUERY_SUPPORT
 #ifdef HGE_CONDITIONAL_RENDERING_SUPPORT
-	glEndConditionalRender();
+	//glEndConditionalRender();
 #endif
 #endif
 }
@@ -129,12 +129,12 @@ void hge::render::GeometryUnit::setData(std::shared_ptr<utility::Stream> &stream
 		delete [] str;\
 	}
 	/// ID
-	std::string idStr;
-	HGE_READ_STRING(idStr);
-#ifdef HGE_TEST_MODE
-	HGE_LOG_PRINT("ID string is: (%s) size is: (%d)", idStr.c_str(), idStr.length());
-#endif
-	HGE_TEST_FORMAT;
+//	std::string idStr;
+//	HGE_READ_STRING(idStr);
+//#ifdef HGE_TEST_MODE
+//	HGE_LOG_PRINT("ID string is: (%s) size is: (%d)", idStr.c_str(), idStr.length());
+//#endif
+//	HGE_TEST_FORMAT;
 	/// Name
 	std::string nameStr;
 	HGE_READ_STRING(nameStr);
@@ -143,17 +143,17 @@ void hge::render::GeometryUnit::setData(std::shared_ptr<utility::Stream> &stream
 #endif
 	HGE_TEST_FORMAT;
 	/// ID
-	HGE_READ_BTYPE(id);
-#ifdef HGE_TEST_MODE
-	HGE_LOG_PRINT("ID number is: %d", id);
-#endif
+//	HGE_READ_BTYPE(id);
+//#ifdef HGE_TEST_MODE
+//	HGE_LOG_PRINT("ID number is: %d", id);
+//#endif
 	/// Mesh
 	mesh = std::shared_ptr<MeshUnit>(new MeshUnit());
 	mesh->setData(stream, endianCompatible);
 	HGE_TEST_FORMAT;
-	math::Matrix4D<> meshMatrix;
-	meshMatrix.setData(stream, endianCompatible);
-	HGE_TEST_FORMAT;
+//	math::Matrix4D<> meshMatrix;
+//	meshMatrix.setData(stream, endianCompatible);
+//	HGE_TEST_FORMAT;
 	// Occlusion mesh
 	core::Protocol::Types::HgeBoolean hasOcc;
 	HGE_READ_BTYPE(hasOcc);
@@ -167,10 +167,10 @@ void hge::render::GeometryUnit::setData(std::shared_ptr<utility::Stream> &stream
 #endif
 		occlusionQueryMesh = std::shared_ptr<MeshUnit>(new MeshUnit());
 		occlusionQueryMesh->setData(stream, endianCompatible);
-		HGE_TEST_FORMAT;
-		math::Matrix4D<> occlusionQueryMeshMatrix;
-		occlusionQueryMeshMatrix.setData(stream, endianCompatible);
-		HGE_TEST_FORMAT;
+//		HGE_TEST_FORMAT;
+//		math::Matrix4D<> occlusionQueryMeshMatrix;
+//		occlusionQueryMeshMatrix.setData(stream, endianCompatible);
+//		HGE_TEST_FORMAT;
 	}
 }
 void hge::render::GeometryUnit::setDataId(const core::Protocol::Types::IdType &id)

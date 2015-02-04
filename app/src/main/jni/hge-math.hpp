@@ -14,10 +14,12 @@ namespace hge
 		template<typename element_type=float> class Matrix4D;
 
 		template<typename element_type>
-		class Vector3D
+		class Vector3D: public core::Serializable
 		{
 		public:
 			element_type vec [3];
+			Vector3D()
+			{}
 			Vector3D(element_type x, element_type y, element_type z)
 			{
 				vec[0] = x;
@@ -167,6 +169,16 @@ namespace hge
 			element_type length()
 			{
 				return element_type(sqrt(vec[0] * vec[0] + vec[1] * vec[1] + vec[2] * vec[2]));
+			}
+			void setData(std::shared_ptr<utility::Stream> &stream, const bool &endianCompatible = true)
+			{
+				utility::readBinaryType(stream, (char *)(&vec[0]), sizeof(element_type), endianCompatible);
+				utility::readBinaryType(stream, (char *)(&vec[1]), sizeof(element_type), endianCompatible);
+				utility::readBinaryType(stream, (char *)(&vec[2]), sizeof(element_type), endianCompatible);
+			}
+			void print()
+			{
+				HGE_LOG_PRINT("Vector3D(%f, %f, %f)", vec[0], vec[1], vec[2]);
 			}
 		};
 

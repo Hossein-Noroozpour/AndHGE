@@ -55,16 +55,16 @@ hge::render::SceneUnit::draw()
 		glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
 		glDepthMask(GL_TRUE);
 #endif
-//		for(unsigned int i = 0; i < geometries.size(); i++)
-//		{
-//#ifdef HGE_BASIC_QUERY_SUPPORT
-//			geometries[i]->draw();
-//#else
-//			ui::MainWindow::printGraphicAPIErrorAndTerminate(); HGE_IMMIDIATE_PRINT;
-//			geometries[i]->draw(vp);
-//			ui::MainWindow::printGraphicAPIErrorAndTerminate(); HGE_IMMIDIATE_PRINT;
-//#endif
-//		}
+		for(unsigned int i = 0; i < geometries.size(); i++)
+		{
+#ifdef HGE_BASIC_QUERY_SUPPORT
+			geometries[i]->draw();
+#else
+			ui::MainWindow::printGraphicAPIErrorAndTerminate(); HGE_IMMIDIATE_PRINT;
+			geometries[i]->draw(vp);
+			ui::MainWindow::printGraphicAPIErrorAndTerminate(); HGE_IMMIDIATE_PRINT;
+#endif
+		}
 	}
 }
 std::shared_ptr<hge::render::GeometryUnit> hge::render::SceneUnit::getGeoByID(const core::Protocol::Types::IdType &id)

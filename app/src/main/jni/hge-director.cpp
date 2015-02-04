@@ -6,6 +6,7 @@
 #include "hge-skybox-shader-unit.hpp"
 #include "hge-resource-manager.hpp"
 #include "hge-main-window.hpp"
+#include "hge-test-scenarios.hpp"
 #include <thread>
 #include <iostream>
 #include <fstream>
@@ -28,13 +29,31 @@ void hge::core::Director::start()
 }
 void hge::core::Director::initialize()
 {
+#ifdef HGE_DIRECTOR_BASIC_TRIANGLE
+	GLuint shaderProgram = glCreateProgram();
+	GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
+	GLfloat vertices [] =
+	{
+		0.f, 0.f, 0.f,
+		200.f, 200.f, 0.f,
+		200.f, 0.f, 0.f
+	};
+	GLuint vbo;
+	glGenBuffers(1, &vbo);
+	glBindBuffer(GL_ARRAY_BUFFER, vbo);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+#else
 	render::SceneUnit::defaultShader = std::shared_ptr<hge::shader::SunShader>(new hge::shader::SunShader());
 	render::SceneUnit::defaultTexture = std::shared_ptr<hge::texture::TextureUnit>(new hge::texture::TextureUnit(std::string("hge-logo.png")));
 	render::SceneUnit::occlusionQueryShader = std::shared_ptr<hge::shader::WhiteShader>(new hge::shader::WhiteShader());
 	scene = ResourceManager::importScene("hge-sample.hge");
+#endif
 }
 void hge::core::Director::update()
 {
+#ifdef HGE_DIRECTOR_BASIC_TRIANGLE
+	glDrawArrays(GL_TRIANGLES, 0, 3);
+#else
 	gldo_lock.lock();
 	for (auto f : gldo)
 	{
@@ -59,6 +78,7 @@ void hge::core::Director::update()
 		scene->getCamera()->moveSideward(-cameraMoveSpeed);
 	}
 	scene->draw();
+#endif
 }
 void hge::core::Director::buttonPressed(const HGEButton& key)
 {
@@ -130,11 +150,11 @@ void hge::core::Director::buttonReleased(const HGEButton& key)
 }
 void hge::core::Director::mouseMoved(const float &dx, const float &dy)
 {
-	HGE_LOG_PRINT("Movement is: (%f, %f)", dx, dy);
+	//HGE_LOG_PRINT("Movement is: (%f, %f)", dx, dy);
 	if (rotateOn)
 	{
 		scene->getCamera()->rotateGlobalZ(-dx * cameraRotationSpeed);
 		scene->getCamera()->rotateLocalX(-dy * cameraRotationSpeed);
-		HGE_LOG_PRINT("Movement is: (%f, %f)", dx, dy);
+		//HGE_LOG_PRINT("Movement is: (%f, %f)", dx, dy);
 	}
 }
